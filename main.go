@@ -20,6 +20,8 @@ func main() {
 
 		if message.Message == "!ping" {
 			client.Say(config.Twitch.Channel, "pong")
+		} else if message.Message == "!np" {
+			client.Say(config.Twitch.Channel, GetNowPlaying())
 		}
 	})
 
@@ -30,7 +32,7 @@ func main() {
 	fmt.Println("Sucessfully started HTTP server")
 
 	fmt.Println("Authing Spotify")
-	AuthToSpotify()
+	InitSpotifyAuth()
 
 	fmt.Println("Connecting to TMI service")
 	err := client.Connect()
