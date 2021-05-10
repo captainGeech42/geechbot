@@ -22,6 +22,15 @@ func main() {
 			client.Say(config.Twitch.Channel, "pong")
 		} else if message.Message == "!np" {
 			client.Say(config.Twitch.Channel, GetNowPlaying())
+		} else if message.Message == "!clear" {
+			_, ok := message.User.Badges["moderator"]
+			if !ok {
+				_, ok = message.User.Badges["broadcaster"]
+			}
+
+			if ok {
+				client.Say(config.Twitch.Channel, "/clear")
+			}
 		}
 	})
 
