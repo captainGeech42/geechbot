@@ -6,11 +6,23 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-type Config struct {
+type Twitch struct {
 	Channel    string `yaml:"channel"`
 	Username   string `yaml:"username"`
 	OAuthToken string `yaml:"oauth_token"`
 }
+
+type Spotify struct {
+	ClientID     string `yaml:"client_id"`
+	ClientSecret string `yaml:"client_secret"`
+}
+
+type Config struct {
+	Twitch  Twitch  `yaml:"twitch"`
+	Spotify Spotify `yaml:"spotify"`
+}
+
+var config Config
 
 func LoadConfig() Config {
 	config := Config{}

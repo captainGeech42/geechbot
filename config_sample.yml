@@ -1,4 +1,9 @@
 ---
-channel: asdf
-username: asdf
-oauth_token: asdf
+twitch:
+  channel: asdf
+  username: asdf
+  oauth_token: asdf
+
+spotify:
+  client_id: asdf
+  client_secret: asdf
