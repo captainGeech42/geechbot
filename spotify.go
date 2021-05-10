@@ -40,6 +40,8 @@ func HandleSpotifyOauthCallback(r *http.Request) {
 }
 
 func GetNowPlaying() string {
+	// TODO: need to verify that we are authed and spotifyClient isn't null
+
 	currentlyPlaying, err := spotifyClient.PlayerCurrentlyPlaying()
 	if err != nil {
 		panic(err)
