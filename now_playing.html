@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <style>
+        div {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+
+        .container {
+            width: 300px;
+            overflow-x: scroll;
+            white-space: nowrap;
+            background-color: #fff;
+        }
+
+        #container {
+            width: 300px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        #modules {
+            height: 90px;
+            /* 40px - more place for scrollbar, is hidden under parent box */
+            padding: 5px;
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #container {
+            width: 300px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        #modules {
+            height: 90px;
+            /* 40px - more place for scrollbar, is hidden under parent box */
+            padding: 5px;
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: hide;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .module {
+            /* display: inline-block; */
+            /* width: 50px;
+            height: 50px;
+            line-height: 50px; */
+            /* text-align: center; */
+            /* background: #ddd; */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+
+        .module+.module {
+            margin-left: 5px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="modules">
+            <!-- <div id="nowplaying" class="module">Waiting for WebSocket connection...</div> -->
+        </div>
+    </div>
+
+    <script>
+        targetDiv = document.getElementById("modules");
+
+        ws = new WebSocket("ws://localhost:8080/nowplaying/ws")
+
+        ws.onmessage = (evt) => {
+            targetDiv.textContent = evt.data
+        }
+
+        scrollDiv = document.getElementById("nowplaying")
+        const divScrollWidth = scrollDiv.scrollWidth;
+
+        window.addEventListener('load', () => {
+            self.setInterval(() => {
+                if (scrollDiv.scrollLeft !== divScrollWidth) {
+                    scrollDiv.scrollTo(scrollDiv.scrollLeft + 1, 0);
+                }
+            }, 15);
+        });
+    </script>
+</body>
+
+</html>

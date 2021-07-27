@@ -9,15 +9,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
-func spotifyAuthHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<html><body style=\"font-size: 16px;\"><pre>Please return back to geechbot</pre></body></html>")
-
-	go HandleSpotifyOauthCallback(r)
-}
-
 func StartHttpServer() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth/spotify", spotifyAuthHandler)
+	http.HandleFunc("/nowplaying", nowPlayingRender)
+	http.HandleFunc("/nowplaying/ws", nowPlayingWS)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
