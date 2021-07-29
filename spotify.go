@@ -15,7 +15,7 @@ import (
 var spotifyAuthRedirectUri = "http://localhost:8080/oauth/spotify"
 
 var spotifyAuthClient spotify.Authenticator
-var spotifyClient spotify.Client
+var spotifyClient *spotify.Client
 
 const cacheFilePath = ".spotify_auth_cache"
 
@@ -58,7 +58,7 @@ func readAuthFromCache() *oauth2.Token {
 	}
 
 	// make sure the token is still valid
-	if token.Expiry.After(time.Now()) {
+	if !token.Expiry.After(time.Now()) {
 		return nil
 	}
 
@@ -69,8 +69,9 @@ func readAuthFromCache() *oauth2.Token {
 func InitSpotifyAuth() {
 	// try to read a cached token
 	token := readAuthFromCache()
-	if token == nil {
-		spotifyClient = spotifyAuthClient.NewClient(token)
+	if token != nil {
+		client := spotifyAuthClient.NewClient(token)
+		spotifyClient = &client
 		fmt.Println("Successfully authed to Spotify using cached creds")
 
 		return
@@ -95,13 +96,16 @@ func HandleSpotifyOauthCallback(r *http.Request) {
 	// cache token
 	cacheAuth(token)
 
-	spotifyClient = spotifyAuthClient.NewClient(token)
+	client := spotifyAuthClient.NewClient(token)
+	spotifyClient = &client
 
 	fmt.Println("Successfully authed to Spotify")
 }
 
 func GetNowPlaying() string {
-	// TODO: need to verify that we are authed and spotifyClient isn't null
+	if spotifyClient == nil {
+		return "Need to auth Spotify!"
+	}
 
 	currentlyPlaying, err := spotifyClient.PlayerCurrentlyPlaying()
 	if err != nil {

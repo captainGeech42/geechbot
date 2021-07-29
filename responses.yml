@@ -1,0 +1,28 @@
+---
+
+static_responses:
+  - commands:
+      - "!workingon"
+      - "!wo"
+      - "!now"
+    messages:
+      - We are analyzing MountLocker ransomware! For more details
+  - commands:
+      - "!github"
+      - "!gh"
+    messages:
+      - https://github.com/captainGeech42
+  - commands:
+      - "!malware"
+    messages:
+      - 1) Don't build malware for malicious purposes. It can be fun to make it for learning purposes, but be thoughtful of what you're creating, how you're presenting it, and where you share it.
+      - 2) When analyzing malware, make sure to properly secure your environment! To be safe, I recommend always working in a virtual machine with no network connected. I have an environment with safe networking configured, but if you aren't sure how to protect yourself, the safest option is to just disconnect the network interface on your VM
+      - 3) Share your knowledge and findings with others! Twitter and GitHub can be great outlets for your findings, and/or a blog!
+  - commands:
+      - "!twitter"
+    messages:
+      - "https://twitter.com/captainGeech42"
+  - commands:
+      - "!www"
+    messages:
+      - "https://zanderwork.com"

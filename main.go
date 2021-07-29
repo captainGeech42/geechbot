@@ -31,6 +31,24 @@ func main() {
 			if ok {
 				client.Say(config.Twitch.Channel, "/clear")
 			}
+		} else if message.Message == "!reload_commands" {
+			_, ok := message.User.Badges["moderator"]
+			if !ok {
+				_, ok = message.User.Badges["broadcaster"]
+			}
+
+			if ok {
+				LoadStaticResponses()
+				client.Say(config.Twitch.Channel, "commands reloaded!")
+			}
+		} else {
+			// handle as a static response from the yaml file
+			resp := HandleStaticResponse(message)
+			if resp != nil {
+				for _, m := range *resp {
+					client.Say(config.Twitch.Channel, m)
+				}
+			}
 		}
 	})
 
